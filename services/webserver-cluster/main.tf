@@ -21,7 +21,7 @@ data "aws_vpc" "default" {
 
 #Configuring local variables (can't be changed or overriden outside of this module)
 locals {
-  http_port = 8081
+  http_port = 8082
   any_port = 0
   any_protocol = "-1"
   tcp_protocol = "tcp"
