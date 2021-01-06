@@ -140,6 +140,16 @@ resource "aws_autoscaling_group" "test123" {
     value               = "${var.cluster_name}-example"
     propagate_at_launch = true
   }
+
+  dynamic "tag" {
+    for_each = var.custom_tagsy
+
+    content {
+      key = tag.key
+      value = tag.value
+      propagate_at_launch = true
+    }
+  }
   }
   
 #Configuring App Load Balancer

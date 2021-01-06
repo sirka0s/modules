@@ -33,3 +33,10 @@ variable "max_size" {
   description = "Maximum number of EC2 instances in ASG"
   type = number
 }
+
+#Custom tags to use with for_each loop
+variable "custom_tagsy" {
+  description = "Custom tags to set on the Instances in ASG"
+  type = map(string)
+  default = {}
+}
