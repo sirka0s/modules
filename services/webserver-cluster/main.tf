@@ -222,7 +222,7 @@ resource "aws_autoscaling_schedule" "scale_out_during_bh" {
   desired_capacity = 10
   recurrence = "0 9 * * * " # Every day at 9:00 AM
 
-  autoscaling_group_name = aws_autoscaling_group.asg_name
+  autoscaling_group_name = aws_autoscaling_group.example.name
 }
 
 resource "aws_autoscaling_schedule" "scale_in_at_night" {
@@ -233,5 +233,5 @@ resource "aws_autoscaling_schedule" "scale_in_at_night" {
   desired_capacity = 2
   recurrence = "0 17 * * * " # Every day at 5:00 PM
 
-  autoscaling_group_name = aws_autoscaling_group.asg_name
+  autoscaling_group_name = aws_autoscaling_group.example.name
 }
