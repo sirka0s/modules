@@ -40,3 +40,9 @@ variable "custom_tagsy" {
   type = map(string)
   default = {}
 }
+
+#Boolean input variable
+variable "enable_autoscaling" {
+  description = "If true, enable autoscaling"
+  type = bool
+}
