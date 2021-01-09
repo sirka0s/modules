@@ -1,9 +1,9 @@
-variable "server_port" {
+/*variable "server_port" {
   description = "The port server will use for HTTP requests"
   type        = number 
   default     = 8081
 }
-
+*/
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
   type = string
@@ -44,5 +44,10 @@ variable "custom_tagsy" {
 #Boolean input variable
 variable "enable_autoscaling" {
   description = "If true, enable autoscaling"
+  type = bool
+}
+
+variable "enable_new_user_data" {
+  description = "If set to true, use new user script data"
   type = bool
 }

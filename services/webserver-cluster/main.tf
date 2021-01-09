@@ -45,14 +45,26 @@ data "terraform_remote_state" "db" {
   }
 }
 
-#Preparing template file for user_data script for EC2 instances
+#Preparing templates file for user_data script for EC2 instances
 data "template_file" "user_data" {
+  count = var.enable_new_user_data ? 0 : 1 
+
   template = file("${path.module}/user-data.sh")
 
   vars = {
     server_port = local.http_port
     db_address  = data.terraform_remote_state.db.outputs.rds_address
     db_port     = data.terraform_remote_state.db.outputs.rds_port
+  }
+}
+
+data "template_file" "user_data_new" {
+  count = var.enable_new_user_data ? 1 : 0 
+
+  template = file("${path.module}/user-data-new.sh")
+
+  vars = {
+    server_port = local.http_port
   }
 }
 
@@ -117,8 +129,13 @@ resource "aws_launch_configuration" "test123" {
   image_id               = local.ami_id
   instance_type          = var.instance_type
   security_groups        = [aws_security_group.httpin8081.id]
-
-  user_data = data.template_file.user_data.rendered
+  key_name = "key_pair_kaos_aws"
+  
+  user_data = (
+    length(data.template_file.user_data[*]) > 0
+    ? data.template_file.user_data[0].rendered
+    : data.template_file.user_data_new[0].rendered
+  )
 
   lifecycle {
     create_before_destroy = true
