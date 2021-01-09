@@ -216,22 +216,22 @@ resource "aws_lb_listener_rule" "asg-listener" {
 #Configuring boolean autoscaling
 resource "aws_autoscaling_schedule" "scale_out_during_bh" {
   count = var.enable_autoscaling ? 1 : 0
-  scheduled_action_name = "scale-out-during-business-hours"
+  scheduled_action_name = "?{var.cluster_name}-scale-out-during-business-hours"
   min_size = 2
   max_size = 10
   desired_capacity = 10
   recurrence = "0 9 * * * " # Every day at 9:00 AM
 
-  autoscaling_group_name = aws_autoscaling_group.example.name
+  autoscaling_group_name = aws_autoscaling_group.scale_out_during_bh.name
 }
 
 resource "aws_autoscaling_schedule" "scale_in_at_night" {
   count = var.enable_autoscaling ? 1 : 0
-  scheduled_action_name = "scale-in-at-night"
+  scheduled_action_name = "?{var.cluster_name}-scale-in-at-night"
   min_size = 2
   max_size = 10
   desired_capacity = 2
   recurrence = "0 17 * * * " # Every day at 5:00 PM
 
-  autoscaling_group_name = aws_autoscaling_group.example.name
+  autoscaling_group_name = aws_autoscaling_group.scale_in_at_night.name
 }
