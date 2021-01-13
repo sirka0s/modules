@@ -88,6 +88,19 @@ resource "aws_security_group_rule" "allow_8081_in" {
   to_port           = local.http_port  
   }
   
+resource "aws_security_group_rule" "allow_ssh" {
+  type = "ingress"
+  security_group_id = aws_security_group.httpin8081.id
+  
+  cidr_blocks       = local.all_ips
+  description       = "value"
+  from_port         = 22
+  ipv6_cidr_blocks  = []
+  prefix_list_ids   = []
+  protocol          = local.tcp_protocol
+  self              = false
+  to_port           = 22
+  }
 
 #Configuring SG for Load Balancer to allow tcp:8081
 resource "aws_security_group" "alb" {
@@ -108,6 +121,8 @@ resource "aws_security_group_rule" "alb_allow_8081_in" {
   self              = false
   to_port           = local.http_port
 }
+
+
 
 resource "aws_security_group_rule" "alb_allow_all_out" {
   type = "egress" 
