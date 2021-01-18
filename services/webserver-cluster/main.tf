@@ -26,7 +26,7 @@ locals {
   any_protocol = "-1"
   tcp_protocol = "tcp"
   all_ips = ["0.0.0.0/0"]  
-  ami_id = "ami-00ddb0e5626798373" #Ubuntu 20.04 Free Tier Eligable
+  ami_id = "ami-00ddb0e5626798373" #Ubuntu 18.04 Free Tier Eligable
 }
 
 #Geting subnets inside default VPC
